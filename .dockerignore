@@ -1,0 +1,27 @@
+# Files excluded from the Docker build context.
+# Keeping the context small speeds up builds and avoids leaking local state.
+
+# Version control
+.git
+.github
+
+# Flutter / Dart tooling & caches
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+
+# Editor artefacts
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Logs and temp files
+*.log
+*.swp
+migrate_working_dir/

@@ -1,0 +1,31 @@
+# Docker Compose configuration for MoveMate.
+#
+# Services
+# --------
+# app   – Builds the Flutter web app and serves it with nginx on port 8080.
+# test  – Runs flutter analyze + flutter test inside the builder stage and exits.
+#
+# Usage
+# -----
+#   Start the app:          docker compose up app
+#   Run tests only:         docker compose run --rm test
+#   Rebuild after changes:  docker compose up app --build
+
+services:
+  app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  test:
+    build:
+      context: .
+      target: builder
+    # Override the default CMD so the container exits after tests complete.
+    # analyze and test are already executed during the Docker build; this
+    # service re-runs them on demand without rebuilding from scratch.
+    command: >
+      sh -c "flutter analyze && flutter test"
